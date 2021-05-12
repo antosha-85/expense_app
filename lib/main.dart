@@ -25,6 +25,8 @@ class MyApp extends StatelessWidget {
           title: Text('Flutter Demo Home Page'),
         ),
         body: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             Container(
               width: double.infinity,
@@ -34,6 +36,30 @@ class MyApp extends StatelessWidget {
                 elevation: 5,
               ),
             ),
+            Card(
+                elevation: 5,
+                child: Container(
+                  padding: EdgeInsets.all(10),
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: <Widget>[
+                        TextField(
+                          autocorrect: true,
+                          autofocus: true,
+                          decoration: InputDecoration(labelText: 'Title'),
+                        ),
+                        TextField(
+                          autocorrect: true,
+                          autofocus: true,
+                          decoration: InputDecoration(labelText: 'Amount'),
+                        ),
+                        TextButton(
+                          onPressed: () {},
+                          child: Text('Add transaction'),
+                          style: TextButton.styleFrom(primary: Colors.purple),
+                        ),
+                      ]),
+                )),
             Column(
               children: transactions.map((transaction) {
                 return Card(
@@ -59,11 +85,14 @@ class MyApp extends StatelessWidget {
                           Text(
                             transaction.title,
                             style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16,
-                              ),
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                            ),
                           ),
-                          Text(DateFormat.yMMMd().format(transaction.date), style: TextStyle(color: Colors.grey),)
+                          Text(
+                            DateFormat.yMMMd().format(transaction.date),
+                            style: TextStyle(color: Colors.grey),
+                          )
                         ],
                       )
                     ],
