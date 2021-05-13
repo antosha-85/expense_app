@@ -38,13 +38,13 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final List<Transaction> _userTransactions = [
-    Transaction(
-        id: 't1', title: 'New Shoes', amount: 69.99, date: DateTime.now()),
-    Transaction(
-        id: 't2',
-        title: 'Weekly Groceries',
-        amount: 16.99,
-        date: DateTime.now()),
+    //   Transaction(
+    //       id: 't1', title: 'New Shoes', amount: 69.99, date: DateTime.now()),
+    //   Transaction(
+    //       id: 't2',
+    //       title: 'Weekly Groceries',
+    //       amount: 16.99,
+    //       date: DateTime.now()),
   ];
 
   void _addNewTransaction(String title, double amount) {
@@ -94,7 +94,10 @@ class _MyHomePageState extends State<MyHomePage> {
               width: double.infinity,
               child: Card(
                 color: Theme.of(context).primaryColor,
-                child: Text('CHART'),
+                child: Text(
+                  'CHART',
+                  style: Theme.of(context).textTheme.headline6,
+                ),
                 elevation: 5,
               ),
             ),
