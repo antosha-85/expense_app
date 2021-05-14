@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:expense_app/widgets/new_transaction.dart';
 import 'package:expense_app/widgets/transaction_list.dart';
 import 'models/transaction.dart';
-import 'package:flutter/services.dart';
+// import 'package:flutter/services.dart';
 
 void main() {
   // WidgetsFlutterBinding.ensureInitialized();
@@ -116,6 +116,7 @@ class _MyHomePageState extends State<MyHomePage> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
               Container(
+                margin: EdgeInsets.fromLTRB(0, 20, 0, 0),
                 height: constraints.maxHeight * 0.05,
                 child:
                     Row(mainAxisAlignment: MainAxisAlignment.center, children: [
@@ -131,7 +132,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               _showChart
                   ? Container(
-                      height: constraints.maxHeight * 0.3,
+                      height: constraints.maxHeight * 0.7,
                       child: Chart(_recentTransactions))
                   : Container(
                       height: constraints.maxHeight * 0.65,
