@@ -29,30 +29,43 @@ class _NewTransactionState extends State<NewTransaction> {
     return Card(
         elevation: 5,
         child: Container(
-          padding: EdgeInsets.all(10),
+          padding: EdgeInsets.all(6),
           child: Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: <Widget>[
                 TextField(
-                  autocorrect: true,
-                  autofocus: true,
                   decoration: InputDecoration(labelText: 'Title'),
                   controller: titleController,
                   onSubmitted: (_) => submitData(),
                 ),
                 TextField(
-                  autocorrect: true,
-                  autofocus: true,
                   decoration: InputDecoration(labelText: 'Amount'),
                   controller: amountContoller,
                   keyboardType: TextInputType.numberWithOptions(decimal: true),
                   onSubmitted: (_) => submitData(),
                 ),
-                TextButton(
+                Container(
+                  height: 70,
+                  child: Row(
+                    children: [
+                      Text('No Date Chosen!'),
+                      TextButton(
+                          style: TextButton.styleFrom(
+                              primary: Theme.of(context).primaryColor),
+                          onPressed: () {},
+                          child: Text(
+                            'Chose Date',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ))
+                    ],
+                  ),
+                ),
+                ElevatedButton(
                   onPressed: submitData,
                   child: Text('Add transaction'),
-                  style: TextButton.styleFrom(
-                      primary: Theme.of(context).primaryColor),
+                  style: ButtonStyle(
+                      foregroundColor: MaterialStateProperty.all<Color>(
+                          Theme.of(context).textTheme.button.color)),
                 ),
               ]),
         ));
