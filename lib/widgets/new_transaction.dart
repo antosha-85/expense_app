@@ -14,12 +14,15 @@ class _NewTransactionState extends State<NewTransaction> {
   final _amountContoller = TextEditingController();
   DateTime _selectedDate;
   void _submitData() {
-    final enteredTitle = _titleController.text;
-    final enteredAmount = double.parse(_amountContoller.text);
-    if (enteredTitle.isEmpty || enteredAmount <= 0) {
+    if (_amountContoller.text.isEmpty) {
       return;
     }
-    widget.addTransaction(enteredTitle, enteredAmount);
+    final enteredTitle = _titleController.text;
+    final enteredAmount = double.parse(_amountContoller.text);
+    if (enteredTitle.isEmpty || enteredAmount <= 0 || _selectedDate == null) {
+      return;
+    }
+    widget.addTransaction(enteredTitle, enteredAmount, _selectedDate);
     Navigator.of(context)
         .pop(); //closing input data and kind of returns to the previous page
   }
