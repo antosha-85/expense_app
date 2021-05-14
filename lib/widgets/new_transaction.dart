@@ -49,48 +49,53 @@ class _NewTransactionState extends State<NewTransaction> {
         elevation: 5,
         child: Container(
           padding: EdgeInsets.all(6),
-          child: Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: <Widget>[
-                TextField(
-                  decoration: InputDecoration(labelText: 'Title'),
-                  controller: _titleController,
-                  onSubmitted: (_) => _submitData(),
-                ),
-                TextField(
-                  decoration: InputDecoration(labelText: 'Amount'),
-                  controller: _amountContoller,
-                  keyboardType: TextInputType.numberWithOptions(decimal: true),
-                  onSubmitted: (_) => _submitData(),
-                ),
-                Container(
-                  height: 70,
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: Text(_selectedDate == null
-                            ? 'No Date Chosen!'
-                            : 'Picked Date: ${DateFormat.yMd().format(_selectedDate)}'),
+          child: ListView(
+            children: [
+              Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: <Widget>[
+                    TextField(
+                      decoration: InputDecoration(labelText: 'Title'),
+                      controller: _titleController,
+                      onSubmitted: (_) => _submitData(),
+                    ),
+                    TextField(
+                      decoration: InputDecoration(labelText: 'Amount'),
+                      controller: _amountContoller,
+                      keyboardType:
+                          TextInputType.numberWithOptions(decimal: true),
+                      onSubmitted: (_) => _submitData(),
+                    ),
+                    Container(
+                      height: 70,
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: Text(_selectedDate == null
+                                ? 'No Date Chosen!'
+                                : 'Picked Date: ${DateFormat.yMd().format(_selectedDate)}'),
+                          ),
+                          TextButton(
+                              style: TextButton.styleFrom(
+                                  primary: Theme.of(context).primaryColor),
+                              onPressed: _presentDatePicker,
+                              child: Text(
+                                'Choose Date',
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ))
+                        ],
                       ),
-                      TextButton(
-                          style: TextButton.styleFrom(
-                              primary: Theme.of(context).primaryColor),
-                          onPressed: _presentDatePicker,
-                          child: Text(
-                            'Choose Date',
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ))
-                    ],
-                  ),
-                ),
-                ElevatedButton(
-                  onPressed: _submitData,
-                  child: Text('Add transaction'),
-                  style: ButtonStyle(
-                      foregroundColor: MaterialStateProperty.all<Color>(
-                          Theme.of(context).textTheme.button.color)),
-                ),
-              ]),
+                    ),
+                    ElevatedButton(
+                      onPressed: _submitData,
+                      child: Text('Add transaction'),
+                      style: ButtonStyle(
+                          foregroundColor: MaterialStateProperty.all<Color>(
+                              Theme.of(context).textTheme.button.color)),
+                    ),
+                  ])
+            ],
+          ),
         ));
   }
 }
