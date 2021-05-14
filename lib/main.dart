@@ -103,32 +103,26 @@ class _MyHomePageState extends State<MyHomePage> {
     );
     return Scaffold(
       appBar: appBar,
-      body: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            Container(
-                height: (MediaQuery.of(context).size.height -
-                        appBar.preferredSize.height -
-                        MediaQuery.of(context).padding.top) *
-                    0.25,
-                child: Chart(_recentTransactions)),
-            Container(
-                height: (MediaQuery.of(context).size.height -
-                        appBar.preferredSize.height -
-                        -MediaQuery.of(context).padding.top) *
-                    0.7,
-                child: TransactionList(_userTransactions, _deleteTransaction))
-          ],
-        ),
+      body: LayoutBuilder(
+        builder: (context, constraints) {
+          return Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              Container(
+                  height: constraints.maxHeight * 0.3,
+                  child: Chart(_recentTransactions)),
+              Container(
+                  height: constraints.maxHeight * 0.7,
+                  child: TransactionList(_userTransactions, _deleteTransaction))
+            ],
+          );
+        },
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton(
           child: Icon(Icons.add),
           onPressed: () => _startAddNewTransaction(context)),
     );
-
-    // );
   }
 }
