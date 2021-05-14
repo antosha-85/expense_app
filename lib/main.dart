@@ -3,8 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:expense_app/widgets/new_transaction.dart';
 import 'package:expense_app/widgets/transaction_list.dart';
 import 'models/transaction.dart';
+import 'package:flutter/services.dart';
 
 void main() {
+  // WidgetsFlutterBinding.ensureInitialized();
+  // SystemChrome.setPreferredOrientations(
+  //     [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   runApp(MyApp());
 }
 
@@ -49,6 +53,8 @@ class _MyHomePageState extends State<MyHomePage> {
         amount: 16.99,
         date: DateTime.now()),
   ];
+
+  bool _showChart = false;
   List<Transaction> get _recentTransactions {
     return _userTransactions.where((transaction) {
       return transaction.date
@@ -110,11 +116,27 @@ class _MyHomePageState extends State<MyHomePage> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
               Container(
-                  height: constraints.maxHeight * 0.3,
-                  child: Chart(_recentTransactions)),
-              Container(
-                  height: constraints.maxHeight * 0.7,
-                  child: TransactionList(_userTransactions, _deleteTransaction))
+                height: constraints.maxHeight * 0.05,
+                child:
+                    Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                  Text('Show Chart'),
+                  Switch(
+                      value: _showChart,
+                      onChanged: (value) {
+                        setState(() {
+                          _showChart = value;
+                        });
+                      })
+                ]),
+              ),
+              _showChart
+                  ? Container(
+                      height: constraints.maxHeight * 0.3,
+                      child: Chart(_recentTransactions))
+                  : Container(
+                      height: constraints.maxHeight * 0.65,
+                      child: TransactionList(
+                          _userTransactions, _deleteTransaction))
             ],
           );
         },
