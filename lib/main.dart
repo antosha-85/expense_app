@@ -13,7 +13,6 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'My expenses',
@@ -96,6 +95,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final isLandscape =
+        MediaQuery.of(context).orientation == Orientation.landscape;
     final appBar = AppBar(
       title: Text(
         'My expenses',
@@ -115,29 +116,41 @@ class _MyHomePageState extends State<MyHomePage> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-              Container(
-                margin: EdgeInsets.fromLTRB(0, 20, 0, 0),
-                height: constraints.maxHeight * 0.05,
-                child:
-                    Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                  Text('Show Chart'),
-                  Switch(
-                      value: _showChart,
-                      onChanged: (value) {
-                        setState(() {
-                          _showChart = value;
-                        });
-                      })
-                ]),
-              ),
-              _showChart
-                  ? Container(
-                      height: constraints.maxHeight * 0.7,
-                      child: Chart(_recentTransactions))
-                  : Container(
-                      height: constraints.maxHeight * 0.65,
-                      child: TransactionList(
-                          _userTransactions, _deleteTransaction))
+              if (isLandscape)
+                Container(
+                  margin: EdgeInsets.fromLTRB(0, 20, 0, 0),
+                  height: constraints.maxHeight * 0.05,
+                  child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text('Show Chart'),
+                        Switch(
+                            value: _showChart,
+                            onChanged: (value) {
+                              setState(() {
+                                _showChart = value;
+                              });
+                            })
+                      ]),
+                ),
+              if (!isLandscape)
+                Container(
+                    height: constraints.maxHeight * 0.3,
+                    child: Chart(_recentTransactions)),
+              if (!isLandscape)
+                Container(
+                    height: constraints.maxHeight * 0.65,
+                    child:
+                        TransactionList(_userTransactions, _deleteTransaction)),
+              if (isLandscape)
+                _showChart
+                    ? Container(
+                        height: constraints.maxHeight * 0.65,
+                        child: Chart(_recentTransactions))
+                    : Container(
+                        height: constraints.maxHeight * 0.65,
+                        child: TransactionList(
+                            _userTransactions, _deleteTransaction))
             ],
           );
         },
