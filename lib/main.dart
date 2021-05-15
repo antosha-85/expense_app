@@ -94,6 +94,46 @@ class _MyHomePageState extends State<MyHomePage> {
         });
   }
 
+  List<Widget> _buildLandscapeContent(BoxConstraints constraints) {
+    return [
+      Container(
+        margin: EdgeInsets.fromLTRB(0, 10, 0, 0),
+        height: constraints.maxHeight * 0.08,
+        child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+          Text('Show Chart', style: Theme.of(context).textTheme.headline6),
+          Switch.adaptive(
+              activeColor: Theme.of(context).accentColor,
+              value: _showChart,
+              onChanged: (value) {
+                setState(() {
+                  _showChart = value;
+                });
+              })
+        ]),
+      ),
+      _showChart
+          ? Container(
+              height: constraints.maxHeight * 0.65,
+              child: Chart(_recentTransactions))
+          : _transactionListWidget(constraints)
+    ];
+  }
+
+  List<Widget> _buildPortraitContent(BoxConstraints constraints) {
+    return [
+      Container(
+          height: constraints.maxHeight * 0.3,
+          child: Chart(_recentTransactions)),
+      _transactionListWidget(constraints)
+    ];
+  }
+
+  Widget _transactionListWidget(constraints) {
+    return Container(
+        height: constraints.maxHeight * 0.65,
+        child: TransactionList(_userTransactions, _deleteTransaction));
+  }
+
   @override
   Widget build(BuildContext context) {
     final isLandscape =
@@ -128,42 +168,8 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            if (isLandscape)
-              Container(
-                margin: EdgeInsets.fromLTRB(0, 20, 0, 0),
-                height: constraints.maxHeight * 0.05,
-                child:
-                    Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                  Text('Show Chart',
-                      style: Theme.of(context).textTheme.headline6),
-                  Switch.adaptive(
-                      activeColor: Theme.of(context).accentColor,
-                      value: _showChart,
-                      onChanged: (value) {
-                        setState(() {
-                          _showChart = value;
-                        });
-                      })
-                ]),
-              ),
-            if (!isLandscape)
-              Container(
-                  height: constraints.maxHeight * 0.3,
-                  child: Chart(_recentTransactions)),
-            if (!isLandscape)
-              Container(
-                  height: constraints.maxHeight * 0.65,
-                  child:
-                      TransactionList(_userTransactions, _deleteTransaction)),
-            if (isLandscape)
-              _showChart
-                  ? Container(
-                      height: constraints.maxHeight * 0.65,
-                      child: Chart(_recentTransactions))
-                  : Container(
-                      height: constraints.maxHeight * 0.65,
-                      child: TransactionList(
-                          _userTransactions, _deleteTransaction))
+            if (isLandscape) ..._buildLandscapeContent(constraints),
+            if (!isLandscape) ..._buildPortraitContent(constraints),
           ],
         );
       },
