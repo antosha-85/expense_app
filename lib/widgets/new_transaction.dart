@@ -48,7 +48,7 @@ class _NewTransactionState extends State<NewTransaction> {
     return Card(
         elevation: 5,
         child: Container(
-          padding: EdgeInsets.all(6),
+          padding: EdgeInsets.only(top: 10, left: 10, right: 10, bottom: 10),
           child: ListView(
             children: [
               Column(
